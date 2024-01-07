@@ -22,28 +22,14 @@
       color: white;
       overflow: hidden; /* Hide horizontal scrollbar caused by snowfall effect */
     }
-
-    .pfp-image {
-      border: 30px solid #1f202038;
-      animation: pulse 1s infinite alternate; /* Pulsing animation */
-    }
-
-    @keyframes pulse {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.1);
-      }
-    }
   </style>
 </head>
 <body>
   <div class="">
     <div class="center">
       <div class="container blur">
-        <img class="pfp-image" src="ethsontop.png" alt="pfp">
-        <pre id="ascii" onclick="playAudio('https://example.com/your-audio.mp3'); showSocials()">
+        <img class="pfp-image" style="border: 30px solid #1f202038;" src="ethsontop.png" alt="pfp">
+        <pre id="ascii" onclick="playAudio(); showSocials()">
             .----.
     .---------. | == |
     |.-"""""-.| |----|
@@ -80,7 +66,7 @@
     </div>
   </div>
 
-  <audio id="ethss.github.com/web/ethsontop.mp3"></audio>
+  <audio id="audio" src="ethsontop.mp3"></audio>
 
   <script>
     function showSocials() {
@@ -88,19 +74,10 @@
       document.getElementById('socials').style.display = 'block';
     }
 
-    function playAudio(url) {
+    function playAudio() {
       var audio = document.getElementById('audio');
-      audio.src = url;
       audio.play();
-
-      // Add animation class to pulse the profile picture to the beat of the music
-      document.querySelector('.pfp-image').classList.add('pulse-animation');
     }
-
-    // Event listener to reset the animation class when the audio ends
-    document.getElementById('audio').addEventListener('ended', function () {
-      document.querySelector('.pfp-image').classList.remove('pulse-animation');
-    });
   </script>
 </body>
 </html>
