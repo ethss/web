@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="ethsontop.png">
   <title>.men</title>
@@ -30,7 +29,7 @@
     <div class="center">
       <div class="container blur">
         <img class="pfp-image" style="border: 30px solid #1f202038;" src="ethsontop.png" alt="pfp">
-        <pre id="ascii" onclick="showSocials()">
+        <pre id="ascii" onclick="playAudio(); showSocials()">
             .----.
     .---------. | == |
     |.-"""""-.| |----|
@@ -59,7 +58,6 @@
           <a target="_blank" href="https://www.roblox.com/users/4746452746/profile">
             <button style="border-radius: 30px" class="btn-link" type="button">roblox</button>
           </a>
-          </a>
           <a target="_blank" href="https://www.youtube.com/@eth_s/featured">
             <button style="border-radius: 30px" class="btn-link" type="button">youtube</button>
           </a>
@@ -68,17 +66,17 @@
     </div>
   </div>
 
+  <audio id="audio" src="ethsontop.mp3"></audio>
+
   <script>
     function showSocials() {
       document.getElementById('ascii').style.display = 'none';
       document.getElementById('socials').style.display = 'block';
     }
 
-    function startSnowfall() {
-      // Include snowfall library
-      var snowScript = document.createElement('script');
-      snowScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/snowfall/1.1/snowfall.min.js';
-      document.head.appendChild(snowScript);
+    function playAudio() {
+      var audio = document.getElementById('audio');
+      audio.play();
     }
   </script>
 </body>
