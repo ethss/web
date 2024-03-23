@@ -6,21 +6,16 @@
     <title>Vidsrc API Example</title>
 </head>
 <body>
-    <h1>Vidsrc API Example</h1>
+    <h1><$</h1>
     
-    <!-- Embedding a Movie -->
     <iframe src="https://vidsrc.to/embed/movie/tt17048514" width="800" height="450" frameborder="0" allowfullscreen></iframe>
 
-    <!-- Embedding a TV Show -->
     <iframe src="https://vidsrc.to/embed/tv/tt18382028" width="800" height="450" frameborder="0" allowfullscreen></iframe>
 
-    <!-- Embedding a TV Show Season -->
     <iframe src="https://vidsrc.to/embed/tv/tt18382028/1" width="800" height="450" frameborder="0" allowfullscreen></iframe>
 
-    <!-- Embedding a TV Show Episode -->
     <iframe src="https://vidsrc.to/embed/tv/tt18382028/1/5" width="800" height="450" frameborder="0" allowfullscreen></iframe>
 
-    <!-- API Endpoint for New Movies -->
     <script>
         fetch('https://vidsrc.to/vapi/movie/new')
             .then(response => response.json())
