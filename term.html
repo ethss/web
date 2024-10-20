@@ -1,0 +1,226 @@
+<html><head><base href="https://gothackr.net/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeoGothHackr - Cyber Abyss Interface</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Courier New', monospace;
+    background-color: #000;
+    color: #0f0;
+    overflow: hidden;
+    cursor: none;
+  }
+  #terminal {
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+  }
+  #input-line {
+    display: flex;
+    align-items: center;
+  }
+  #prompt {
+    color: #ff00ff;
+    margin-right: 10px;
+    text-shadow: 0 0 5px #ff00ff;
+  }
+  #user-input {
+    background: transparent;
+    border: none;
+    color: #0f0;
+    font-family: inherit;
+    font-size: inherit;
+    flex-grow: 1;
+    outline: none;
+  }
+  .output {
+    margin-bottom: 10px;
+    text-shadow: 0 0 3px #0f0;
+  }
+  #matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  #custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff00ff;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  @keyframes glitch {
+    0% { text-shadow: 3px 0 0 red, -3px 0 0 blue; }
+    66% { text-shadow: -3px 0 0 red, 3px 0 0 blue; }
+    100% { text-shadow: 3px 0 0 red, -3px 0 0 blue; }
+  }
+  .glitch {
+    animation: glitch 0.3s infinite;
+  }
+  .ascii-art {
+    font-family: monospace;
+    white-space: pre;
+    font-size: 12px;
+    color: #ff00ff;
+  }
+</style>
+</head>
+<body>
+<div id="custom-cursor"></div>
+<canvas id="matrix-bg"></canvas>
+<div id="terminal">
+  <div class="output glitch">NeoGothHackr v3.0 - Cyber Abyss Interface Activated</div>
+  <div class="output">Type 'help' to see available commands.</div>
+  <div id="input-line">
+    <span id="prompt">></span>
+    <input type="text" id="user-input" autofocus>
+  </div>
+</div>
+
+<script>
+// Matrix background
+const canvas = document.getElementById('matrix-bg');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const nums = '0123456789';
+const alphabet = katakana + latin + nums;
+
+const fontSize = 16;
+const columns = canvas.width/fontSize;
+
+const rainDrops = [];
+
+for( let x = 0; x < columns; x++ ) {
+	rainDrops[x] = 1;
+}
+
+const draw = () => {
+	ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	ctx.fillStyle = '#0F0';
+	ctx.font = fontSize + 'px monospace';
+
+	for(let i = 0; i < rainDrops.length; i++)
+	{
+		const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+		ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+		
+		if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){
+			rainDrops[i] = 0;
+        }
+		rainDrops[i]++;
+	}
+};
+
+setInterval(draw, 30);
+
+const terminal = document.getElementById('terminal');
+const userInput = document.getElementById('user-input');
+
+const commands = {
+  help: "Available commands: help, infiltrate, decrypt, override, summon, assimilate, ascii, clear",
+  infiltrate: "System breached. Welcome to the abyss, hacker.",
+  decrypt: "Decrypting neural networks... Access granted to the cybernetic unconscious.",
+  override: "Warning: Override initiated. Reality distortion field activated.",
+  summon: "Digital deity summoned. Prepare for transcendence.",
+  assimilate: "Biomechanical fusion process begun. There's no turning back now.",
+  ascii: `
+    .--.
+   |o_o |
+   |:_/ |
+  //   \\ \\
+ (|     | )
+/'\_   _/\`\\
+\\___)=(___/
+  `,
+  clear: function() {
+    const outputs = document.querySelectorAll('.output');
+    outputs.forEach(output => output.remove());
+    return "Terminal cleared.";
+  }
+};
+
+userInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    const command = userInput.value.toLowerCase().trim();
+    const output = document.createElement('div');
+    output.className = 'output';
+    
+    output.innerHTML = `<span style="color: #ff00ff;">> ${userInput.value}</span><br>`;
+    
+    if (command in commands) {
+      if (typeof commands[command] === 'function') {
+        output.innerHTML += commands[command]();
+      } else if (command === 'ascii') {
+        output.innerHTML += `<div class="ascii-art">${commands[command]}</div>`;
+      } else {
+        output.innerHTML += commands[command];
+      }
+    } else {
+      output.innerHTML += "Error: Command not recognized. The void grows stronger.";
+    }
+    
+    if (Math.random() < 0.3) {
+      output.classList.add('glitch');
+    }
+    
+    terminal.insertBefore(output, document.getElementById('input-line'));
+    userInput.value = '';
+    
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+});
+
+const cursor = document.getElementById('custom-cursor');
+
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+setInterval(() => {
+  const elements = document.querySelectorAll('.output');
+  const randomElement = elements[Math.floor(Math.random() * elements.length)];
+  if (randomElement) {
+    randomElement.classList.add('glitch');
+    setTimeout(() => randomElement.classList.remove('glitch'), 300);
+  }
+}, 2000);
+
+const hackingMessages = [
+  "Bypassing quantum firewall...",
+  "Injecting viral nanobots...",
+  "Rewiring neural pathways...",
+  "Corrupting ethical subroutines...",
+  "Synthesizing digital pheromones...",
+  "Hijacking global satellite network...",
+];
+
+function displayHackingMessage() {
+  const output = document.createElement('div');
+  output.className = 'output';
+  output.textContent = hackingMessages[Math.floor(Math.random() * hackingMessages.length)];
+  terminal.insertBefore(output, document.getElementById('input-line'));
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+setInterval(displayHackingMessage, 5000);
+</script>
+</body></html>
