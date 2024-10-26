@@ -358,7 +358,7 @@
     </div>
     
     <audio id="notification-sound" preload="auto">
-        <source src="https://www.myinstants.com/media/sounds/rizz-sound-effect.mp3" type="audio/mpeg">
+        <source src="https://files.catbox.moe/od43jx.mp3" type="audio/mpeg">
     </audio>
     
     <audio id="attachment-sound" preload="auto">
@@ -403,11 +403,11 @@
             const data = snapshot.val();
             appendMessage(data.username, data.message, data.username === username, data.attachment);
             
-            // Play notification sound only for received messages
+
             if (data.username !== username) {
                 notificationSound.play();
                 
-                // Show new messages notice if user has scrolled up
+
                 if (userScrolled && !isScrolledToBottom()) {
                     newMessagesNotice.style.display = 'block';
                 }
