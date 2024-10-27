@@ -195,8 +195,14 @@ button:hover {
     height: 40px;
 }
 .send-button {
-    margin-top: -5px; /* Adjust to move it up, if necessary */
-    padding: 15px 30px; /* Adjust padding for a comfortable look */
+    height: 44px;
+    padding: 0 20px;
+    margin: 0;
+    width: auto;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .logo-text {
     fill: var(--primary);
@@ -227,11 +233,17 @@ button:hover {
     cursor: pointer;
     border: 2px solid var(--text);
 }
-
+.chat-container {
+    display: none;
+    height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+}
 .messages {
     padding: 20px;
     overflow-y: auto;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 180px); /* Adjusted to account for header and input area */
+    margin-bottom: 0;
 }
 
 /* Custom scrollbar styles */
@@ -290,16 +302,31 @@ button:hover {
 .input-area {
     padding: 20px;
     background: var(--surface);
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
 }
-
+.input-area button {
+    height: 44px;
+    padding: 0 20px;
+    margin: 0;
+    width: auto;
+    min-width: 100px;
+}
 .message-input {
-    height: 100%; /* Set the input to take full height of the container */
-    padding: 10px 15px; /* Adjust padding as needed */
-    box-sizing: border-box; /* Ensure padding doesn’t affect overall size */
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
 }
 
 #messageInput {
     flex-grow: 1;
+    height: 44px; /* Match the height of the send button */
+    margin: 0;
 }
 
 .chat-header button {
@@ -388,7 +415,7 @@ button:hover {
         <div class="input-area">
             <div class="message-input">
                 <input type="text" id="messageInput" placeholder="Type your message...">
-                <button onclick="sendMessage()">Send</button>
+                <button class="send-button" onclick="sendMessage()">Send</button>
             </div>
         </div>
     </div>
@@ -509,18 +536,15 @@ function handleUsernameClick(username) {
 // Function to replace emojis in the message content
 function replaceEmojis(text) {
     const emojiMap = {
-        ':)': '😊',
-        ':(': '😢',
-        ':D': '😃',
-        ':P': '😛',
-        '<3': '❤️',
         ':heart:': '❤️',
         ':star:': '⭐',
         ':smile:': '😊',
         ':laugh:': '😄',
         ':sad:': '😢',
         ':cry:': '😭',
-        ':cool:': '😎'
+        ':cool:': '😎',
+        ':sob:':'😭',
+        ':skull:':'💀'
     };
     
     return text.replace(/:\)|:\(|:D|:P|<3|:heart:|:star:|:smile:|:laugh:|:sad:|:cry:|:cool:/g, 
