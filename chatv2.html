@@ -194,7 +194,10 @@ button:hover {
 .logo {
     height: 40px;
 }
-
+.send-button {
+    margin-top: -5px; /* Adjust to move it up, if necessary */
+    padding: 15px 30px; /* Adjust padding for a comfortable look */
+}
 .logo-text {
     fill: var(--primary);
     font-size: 24px;
@@ -290,8 +293,9 @@ button:hover {
 }
 
 .message-input {
-    display: flex;
-    gap: 10px;
+    height: 100%; /* Set the input to take full height of the container */
+    padding: 10px 15px; /* Adjust padding as needed */
+    box-sizing: border-box; /* Ensure padding doesn’t affect overall size */
 }
 
 #messageInput {
