@@ -1,7 +1,7 @@
 <html><head><base href="/" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cutesy Chat</title>
+<title>sunk.rip</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,9 +102,12 @@ body {
 }
 
 .auth-box h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--primary);
+    font-size: 32px;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 40px;
 }
 
 .input-group {
@@ -169,6 +172,32 @@ button:hover {
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+}
+
+.logo-text {
+    fill: var(--primary);
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Comfortaa', cursive;
+}
+
+.logo-dot {
+    fill: var(--secondary);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
 }
 
 .theme-switcher {
@@ -290,7 +319,7 @@ button:hover {
     <div id="authContainer" class="auth-container">
         <div class="auth-box">
             <div id="loginSection">
-                <h2>Login</h2>
+                <h2>sunk.rip</h2>
                 <div class="input-group">
                     <input type="text" id="loginUsername" placeholder="Username">
                 </div>
@@ -304,7 +333,7 @@ button:hover {
             </div>
             
             <div id="signupSection" style="display: none;">
-                <h2>Sign Up</h2>
+                <h2>sunk.rip</h2>
                 <div class="input-group">
                     <input type="text" id="signupUsername" placeholder="Choose Username">
                 </div>
@@ -321,7 +350,12 @@ button:hover {
 
     <div id="chatContainer" class="chat-container" style="display: none;">
         <div class="chat-header">
-            <h2>Cutesy Chat</h2>
+            <div class="logo-container">
+                <svg class="logo" width="140" height="40" viewBox="0 0 140 40">
+                    <text x="10" y="30" class="logo-text">sunk.rip</text>
+                    <circle class="logo-dot" cx="120" r="4" cy="30" />
+                </svg>
+            </div>
             <div class="theme-switcher">
                 <div class="theme-btn" onclick="setTheme('default')" style="background: #ff86b3;"></div>
                 <div class="theme-btn" onclick="setTheme('pastel')" style="background: #ffb5e8;"></div>
@@ -344,6 +378,7 @@ button:hover {
     </div>
 
 <script>
+// Initialize Firebase
 firebase.initializeApp({
     apiKey: "AIzaSyBdiK8tlVyeLrgmEecx8765BN8dQf9JtlM",
     authDomain: "hacker-project-5893b.firebaseapp.com",
@@ -418,6 +453,7 @@ function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
 }
 
+// Chat functionality
 function sendMessage() {
     const messageInput = document.getElementById('messageInput');
     const message = messageInput.value.trim();
@@ -514,6 +550,7 @@ database.ref('messages').on('child_added', (snapshot) => {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
 
+// Auth state observer
 auth.onAuthStateChanged(async (user) => {
     if (user) {
         const userSnapshot = await database.ref('users').child(user.uid).once('value');
