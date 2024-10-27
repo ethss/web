@@ -552,19 +552,16 @@ function replaceEmojis(text) {
 }
 
 // Message display
-database.ref('messages').on('value', (snapshot) => {
+database.ref('messages').on('child_added', (snapshot) => {
+    const message = snapshot.val();
     const messagesDiv = document.getElementById('messages');
-    messagesDiv.innerHTML = ''; // Clear previous messages if any
+    
+    const messageTime = new Date(message.timestamp).toLocaleTimeString();
 
-    snapshot.forEach((childSnapshot) => {
-        const message = childSnapshot.val();
-        const messageTime = new Date(message.timestamp).toLocaleTimeString();
-
-        const messageElement = document.createElement('div');
-        messageElement.className = message.type === 'private' ? 'message private' : 'message';
-
-        if (message.type === 'private' && currentUser &&
-            (message.from === currentUser.username || message.to === currentUser.username)) {
+    if (message.type === 'private') {
+        if (currentUser && (message.from === currentUser.username || message.to === currentUser.username)) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message private';
             messageElement.innerHTML = `
                 <span class="username" onclick="handleUsernameClick('${message.from}')">${message.from}</span>
                 → 
@@ -572,22 +569,24 @@ database.ref('messages').on('value', (snapshot) => {
                 <span class="timestamp">${messageTime}</span>: 
                 ${replaceEmojis(message.content)}
             `;
-        } else if (message.type !== 'private') {
-            if (message.username === 'eths') {
-                messageElement.style.color = '#ff0000';
-                messageElement.style.fontWeight = 'bold';
-            }
-            messageElement.innerHTML = `
-                <span class="username" onclick="handleUsernameClick('${message.username}')">${message.username}</span>
-                <span class="timestamp">${messageTime}</span>: 
-                ${replaceEmojis(message.content)}
-            `;
+            messagesDiv.appendChild(messageElement);
         }
-
+    } else {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message';
+        // Add special styling for user "eths"
+        if (message.username === 'eths') {
+            messageElement.style.color = '#ff0000';
+            messageElement.style.fontWeight = 'bold';
+        }
+        messageElement.innerHTML = `
+            <span class="username" onclick="handleUsernameClick('${message.username}')">${message.username}</span>
+            <span class="timestamp">${messageTime}</span>: 
+            ${replaceEmojis(message.content)}
+        `;
         messagesDiv.appendChild(messageElement);
-    });
-
-    // Scroll to the bottom after loading all messages
+    }
+    
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
 
