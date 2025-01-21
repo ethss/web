@@ -1,89 +1,49 @@
-<!-- hello -->
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <meta charset="UTF-8">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="" />
-  <meta property="og:description" content="▬▬ι═══════ﺤ" />
-  <meta property="og:footer" content="thx|cool" />
-  <meta property="og:url" content="https://evilhide.com" />
-  <link rel="icon" href="ethsontop.png">
-  <title><$</title>
-  <style>
-    .username {
-      font-family: sans-serif;
-    }
-
-    body {
-      background-color: black;
-      background-image: url('nope.com');
-      background-size: cover;
-      color: white;
-      overflow: hidden; /* Hide horizontal scrollbar caused by snowfall effect */
-    }
-  </style>
+  <title>Secure Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Add beforeunload event handler
+    window.addEventListener('beforeunload', function(e) {
+      const audio = new Audio('https://evilhide.com/ethsontop.mp3');
+      audio.play();
+      e.preventDefault();
+      e.returnValue = '';
+    });
+  </script>
 </head>
-<body>
-  <div class="">
-    <div class="center">
-      <div class="container blur">
-        <img class="pfp-image" style="border: 30px solid #1f202038;" src="ethsontop.png" alt="pfp">
-        <pre id="ascii" onclick="playAudio(); showSocials()">
-            .----.
-    .---------. | == |
-    |.-"""""-.| |----|
-    ||       || | == |
-    ||       || |----|
-    |'-.....-'| |::::|
-    `"")---(""` |___.|
-  /:::::::::::\" _  "
-/:::=======:::\`\`\
-`"""""""""""""`  '-'
-                      
-</pre>
-       
-        <div id="socials" style="display: none;">
-          <p class="username">
-            <span class="rgb">zetu</span>
-          </p>
-          <div class="socials">
-            <div class="tooltip">
-              <a>
-                <span id="copyclipboard" class="tooltiptext">zetu</span>
-                <i id="disc" class="fa-brands fa-discord social-icons"></i>
-              </a>
-            </div>
-          </div>
-          <a target="_blank" href="https://www.roblox.com/users/1686918968/profile">
-            <button style="border-radius: 30px" class="btn-link" type="button">roblox</button>
-          </a>
-          <a target="_blank" href="https://www.youtube.com/@eth_s/featured">
-            <button style="border-radius: 30px" class="btn-link" type="button">youtube</button>
-          </a>
-        </div>
+<body data-theme="cyber">
+  <div class="theme-switcher">
+    <button class="theme-btn" data-theme="pastel"></button>
+    <button class="theme-btn" data-theme="forest"></button>
+    <button class="theme-btn" data-theme="cyber"></button>
+    <button class="theme-btn" data-theme="sunset"></button>
+    <button class="theme-btn" data-theme="galaxy"></button>
+  </div>
+
+  <div class="terminal scanning">
+    <div class="terminal-header">
+      <div class="controls">
+        <span class="control close"></span>
+        <span class="control minimize"></span>
+        <span class="control maximize"></span>
+      </div>
+      <div class="title">SECURE TERMINAL v2.0.3</div>
+    </div>
+    <div class="terminal-content">
+      <div id="output"></div>
+      <div class="input-line">
+        <span class="prompt">></span>
+        <input type="text" id="commandInput" autofocus>
       </div>
     </div>
   </div>
 
-  <audio id="audio" src="https://evilhide.com/ethsontop.mp3"></audio>
-
-  <script>
-    function showSocials() {
-      document.getElementById('ascii').style.display = 'none';
-      document.getElementById('socials').style.display = 'block';
-    }
-
-    function playAudio() {
-      var audio = document.getElementById('audio');
-      audio.play();
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
